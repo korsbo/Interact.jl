@@ -302,6 +302,7 @@ type Options{view, T} <: InputWidget{T}
     tooltips::AbstractArray
     readout::Bool
     orientation::AbstractString
+    continuous_update::Bool
 end
 
 Options(view::Symbol, options::OptionDict;
@@ -316,13 +317,14 @@ Options(view::Symbol, options::OptionDict;
         orientation="horizontal",
         syncsig=true,
         syncnearest=true,
+        continuous_update=true,
         sel_mid_idx=0) = begin
     #sel_mid_idx set in selection_slider(...) so default value_label is middle of range
     sel_mid_idx != 0 && (value_label = collect(keys(options.dict))[sel_mid_idx])
     signal, value = init_wsigval(signal, value; typ=typ, default=options[value_label])
     typ = eltype(signal)
     ow = Options{view, typ}(signal, label, value, value_label,
-                    options, icons, tooltips, readout, orientation)
+                    options, icons, tooltips, readout, orientation, continuous_update)
     if syncsig
         syncselnearest = view == :SelectionSlider && typ <: Real && syncnearest
         if view != :SelectMultiple

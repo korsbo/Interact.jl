@@ -46,6 +46,7 @@ statedict(d::Options) =
          :icons=>d.icons,
          :tooltips=>d.tooltips,
          :readout => d.readout,
+         :continuous_update=>d.continuous_update,
          :_options_labels=>collect(keys(d.options)))
 
 statedict(w::Widget) = begin
